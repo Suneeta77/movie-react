@@ -5,11 +5,29 @@ import { SearchForm } from "./components/SearchForm";
 
 function App() {
   const [movieList, setMovieList] = useState([]);
+  //   const [dMovie, setDmovie] = useState({});
 
   const addToMovieList = (searchmovie) => {
-    setMovieList([...movieList, searchmovie]);
+    // setMovieList([...movieList, searchmovie]);
+    const dupli = movieList.filter(
+      (item) => item.imdbID !== searchmovie.imdbID
+    );
+    setMovieList([...dupli, searchmovie]);
+    // setDmovie([...movieList, searchmovie]);
   };
-  console.log(movieList);
+  const handleOnDelete = (id) => {
+    const mov = movieList.filter(({ imdbID }) => imdbID !== id);
+
+    setMovieList(mov);
+    // setDmovie(mov);
+  };
+
+  //   const moveFilter = (mode) => {
+  //     if (!mode) {
+  //       return setDmovie(movieList);
+  //     }
+  //     setDmovie(movieList.filter((itm) => itm.mode === mode));
+  //   };
   return (
     <div className="wrapper bg-dark text-warning min-vh-100">
       <div className="container">
@@ -32,7 +50,7 @@ function App() {
         {/* => button */}
 
         {/* => cards */}
-        <Display movieList={movieList} />
+        <Display movieList={movieList} handleOnDelete={handleOnDelete} />
       </div>
     </div>
   );
